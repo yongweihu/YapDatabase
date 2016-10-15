@@ -21,15 +21,18 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)isEqualToCollectionKey:(YapCollectionKey *)collectionKey;
 
 // These methods are overriden and optimized:
-- (BOOL)isEqual:(id)anObject;
+- (BOOL)isEqual:(nullable id)anObject;
 - (NSUInteger)hash;
+
+// C versions for low-level optimizations:
+
+BOOL YapCollectionKeyEqual(const __unsafe_unretained YapCollectionKey *ck1,
+                           const __unsafe_unretained YapCollectionKey *ck2);
+
+CFHashCode YapCollectionKeyHash(const __unsafe_unretained YapCollectionKey *ck);
 
 // For optimizing usage in YapCache
 + (CFDictionaryKeyCallBacks)keyCallbacks;
-
-// Super optimized (c function call faster than obj-c method invocation):
-BOOL YapCollectionKeyEqual(const __unsafe_unretained YapCollectionKey *ck1,
-                           const __unsafe_unretained YapCollectionKey *ck2);
 
 @end
 

@@ -1069,7 +1069,9 @@ static BOOL ClassVersionsAreCompatible(int oldClassVersion, int newClassVersion)
         if (buffer == bufferStack) {
             bufferStack[0] = (void *)'_';
         } else {
-            memcpy(buffer, (void *)'_', 1); // prefix with underscore to differentiate between nil & empty-string
+            // prefix with underscore to differentiate between nil & empty-string
+            char underscore = '_';
+            memcpy(buffer, (void *)&underscore, 1);
         }
         
 		[dbid getBytes:(buffer + 1)
